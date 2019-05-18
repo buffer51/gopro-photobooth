@@ -1,5 +1,9 @@
+*.DS_Store
+
 # Exclude actual pictures
 pictures/*
+calibration/input_data/*
+calibration/results/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
