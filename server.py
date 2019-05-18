@@ -8,7 +8,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def available_pictures(self):
         files = os.listdir('./pictures/')
-        return [f for f in files if f.endswith('.JPG')]
+        return sorted([f for f in files if f.endswith('.JPG')])
 
     def do_HEAD(self):
         self.send_response(200)
