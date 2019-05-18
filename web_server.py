@@ -7,7 +7,7 @@ class MyHandler(BaseHTTPRequestHandler):
         return os.listdir('./slideshow/')
 
     def available_pictures(self):
-        files = os.listdir('./pictures/')
+        files = os.listdir('./pictures/processed/')
         return sorted([f for f in files if f.endswith('.JPG')])
 
     def do_HEAD(self):
@@ -23,13 +23,14 @@ class MyHandler(BaseHTTPRequestHandler):
             if self.path == '/':
                 maybe_filename = 'index.html'
 
-            print(maybe_filename)
             if maybe_filename in self.available_slideshow_files():
-                self.handle_slideshow(maybe_filename)
+                return self.handle_slideshow(maybe_filename)
             elif maybe_filename.startswith('pictures/'):
-                self.handle_picture(maybe_filename)
-            else:
-                self.handle_other()
+                maybe_filename = maybe_filename.replace('pictures/', '')
+                if maybe_filename in self.available_pictures():
+                    return self.handle_picture(maybe_filename)
+
+            self.handle_other()
 
     def handle_list(self):
         self.send_response(200)
@@ -48,7 +49,7 @@ class MyHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'image/jpg')
         self.end_headers()
-        with open('./{}'.format(filename), 'rb') as f:
+        with open('./pictures/processed/{}'.format(filename), 'rb') as f:
             content = f.read()
             self.wfile.write(content)
 

@@ -1,7 +1,8 @@
 *.DS_Store
 
 # Exclude actual pictures
-pictures/*
+pictures/raw/*
+pictures/processed/*
 calibration/input_data/*
 calibration/results/*
 
