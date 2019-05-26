@@ -1,0 +1,4 @@
+numpy
+opencv-python
+RPi.GPIO
+requests
