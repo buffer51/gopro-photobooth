@@ -3,6 +3,7 @@ import json
 import numpy as np
 import os
 import pickle
+import RPi.GPIO as GPIO
 import requests
 import socket
 import struct
@@ -13,6 +14,8 @@ from threading import Thread
 DEBUG_LOGS = False
 RAW_PICTURES_FOLDER = './pictures/raw'
 PROCESSED_PICTURES_FOLDER = './pictures/processed'
+CHANNEL = 10 # GPIO button channel
+EVENT_DELAY = 5 # In seconds
 
 class MyGoPro:
     ### Static methods ###
@@ -146,10 +149,41 @@ class MyGoPro:
         time.sleep(2)
         print('Done\n')
 
+class GPIOButton():
+	def __init__(self, event_hook):
+		self.pressed = False
+		self.last_press = None
+		self.event_hook = event_hook
+
+        GPIO.setmode(GPIO.BOARD)
+    	GPIO.setup(CHANNEL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(CHANNEL, GPIO.BOTH, callback=button.gpio_event)
+
+	def gpio_event(self, channel):
+		if GPIO.input(CHANNEL):
+			self.down()
+		else:
+			self.up()
+
+	def down(self):
+		self.pressed = True
+
+	def up(self):
+		if self.pressed:
+			self.maybe_event()
+
+		self.pressed = False
+
+	def maybe_event(self):
+		current_time = time.time()
+
+		if not self.last_press or current_time-self.last_press > EVENT_DELAY:
+			self.event_hook()
+			self.last_press = current_time
+
 if __name__ == '__main__':
     gopro = MyGoPro()
+	button = GPIOButton(gopro.take_picture())
 
     while True:
-        command = input('(t)ake picture\n')
-        if command == 't':
-            gopro.take_picture()
+        time.sleep(60)
