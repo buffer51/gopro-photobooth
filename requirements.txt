@@ -1,3 +1,4 @@
+getmac
 numpy
 opencv-python
 RPi.GPIO
