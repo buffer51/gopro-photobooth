@@ -94,10 +94,10 @@ class MyGoPro:
         self.gopro_pictures, self.gopro_videos = MyGoPro.parse_media(response['media'][0]['fs'])
 
     def list_downloaded_pictures(self):
-        self.downloaded_pictures = os.listdir(RAW_PICTURES_FOLDER)
+        self.downloaded_pictures = sort(os.listdir(RAW_PICTURES_FOLDER))
 
     def list_processed_pictures(self):
-        self.processed_pictures = os.listdir(PROCESSED_PICTURES_FOLDER)
+        self.processed_pictures = sort(os.listdir(PROCESSED_PICTURES_FOLDER))
 
     def get_picture(self, picture):
         response = requests.get('http://10.5.5.9:8080/videos/DCIM/{}/{}'.format(self.gopro_id, picture), stream=True)
@@ -183,7 +183,7 @@ class GPIOButton():
 
 if __name__ == '__main__':
     gopro = MyGoPro()
-    button = GPIOButton(gopro.take_picture())
+    button = GPIOButton(gopro.take_picture)
 
     while True:
         time.sleep(60)
