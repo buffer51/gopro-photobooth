@@ -58,7 +58,7 @@ class MyHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 def run(server_class=HTTPServer, handler_class=MyHandler):
-    server_address = ('localhost', 80)
+    server_address = ('', 80)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
 

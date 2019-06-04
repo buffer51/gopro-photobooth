@@ -22,7 +22,7 @@ function addSlide(n) {
 
   var imgBlock = document.createElement('img');
   imgBlock.style = 'width: 100%;';
-  imgBlock.src = 'http://localhost/pictures/' + pictures[n];
+  imgBlock.src = '/pictures/' + pictures[n];
   element.appendChild(imgBlock);
 
   document.getElementById('slide-container').appendChild(element);
@@ -123,7 +123,7 @@ function setSlideInRange(slideNumber) {
 // Refresh as pictures come in
 (function worker() {
   $.ajax({
-    url: 'http://localhost/pictures.json',
+    url: '/pictures.json',
     success: function(data) {
       pictures = data
       updateSlides();
