@@ -157,7 +157,7 @@ class GPIOButton():
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(CHANNEL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(CHANNEL, GPIO.BOTH, callback=button.gpio_event)
+        GPIO.add_event_detect(CHANNEL, GPIO.BOTH, callback=self.gpio_event)
 
     def gpio_event(self, channel):
         if GPIO.input(CHANNEL):

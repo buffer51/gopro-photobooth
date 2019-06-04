@@ -22,3 +22,7 @@ Navigate to `http://localhost:80` to view it.
 
 In order to remove the fisheye effect of the GoPro, the GoPro server uses
 calibration data. To produce it, follow the procedure described in `calibration/README.md`.
+
+## Physical Button
+
+The physical button setup is based on [Using a push button with Raspberry Pi GPIO](https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/).
