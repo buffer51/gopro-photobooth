@@ -94,10 +94,10 @@ class MyGoPro:
         self.gopro_pictures, self.gopro_videos = MyGoPro.parse_media(response['media'][0]['fs'])
 
     def list_downloaded_pictures(self):
-        self.downloaded_pictures = sort(os.listdir(RAW_PICTURES_FOLDER))
+        self.downloaded_pictures = sorted(os.listdir(RAW_PICTURES_FOLDER))
 
     def list_processed_pictures(self):
-        self.processed_pictures = sort(os.listdir(PROCESSED_PICTURES_FOLDER))
+        self.processed_pictures = sorted(os.listdir(PROCESSED_PICTURES_FOLDER))
 
     def get_picture(self, picture):
         response = requests.get('http://10.5.5.9:8080/videos/DCIM/{}/{}'.format(self.gopro_id, picture), stream=True)
@@ -136,8 +136,8 @@ class MyGoPro:
                     self.list_processed_pictures()
                     for picture in [p for p in self.downloaded_pictures if p not in self.processed_pictures]:
                         self.process_picture(picture)
-                except:
-                    print('[refresh_pictures_thread] got an error')
+                except Exception as e:
+                    print('[refresh_pictures_thread] got an error: {}'.format(e))
 
         self.refresh_pictures_thread = Thread(target=refresh_pictures_function)
         self.refresh_pictures_thread.start()

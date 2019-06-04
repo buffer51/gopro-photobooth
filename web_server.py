@@ -1,6 +1,6 @@
 import json
 import os
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 class MyHandler(BaseHTTPRequestHandler):
     def available_slideshow_files(self):
@@ -57,8 +57,8 @@ class MyHandler(BaseHTTPRequestHandler):
         self.send_response(500)
         self.end_headers()
 
-def run(server_class=ThreadingHTTPServer, handler_class=MyHandler):
-    server_address = ('', 80)
+def run(server_class=HTTPServer, handler_class=MyHandler):
+    server_address = ('localhost', 80)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
 
