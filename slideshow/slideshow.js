@@ -1,4 +1,5 @@
 var MAX_SLIDES = 10;
+var initialized = false;
 var rangeStart = 0;
 var currentSlideInRange = 0;
 var pictures = []
@@ -38,8 +39,15 @@ function updateSlides() {
     addSlide(i);
   }
 
+
   setRange(rangeStart);
   setSlideInRange(currentSlideInRange);
+
+  if (!initialized) {
+    rangeStart = Math.floor((pictures.length - 1) / MAX_SLIDES) * MAX_SLIDES;
+    setSlideInRange((pictures.length - 1) % MAX_SLIDES);
+    initialized = true;
+  }
 }
 
 function changeRange(diff) {
